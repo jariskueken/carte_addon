@@ -1,0 +1,13 @@
+tasks:
+  classification: [146818] # [146818, 359955, 359968, 359962, 359965, 190137, 359958, 168757, 168350, 359975]
+  regression: [359944]
+cv:
+  num_splits: 1
+model:
+  type: tabpfn
+  device: cpu
+storage:
+  classification_scores_path: classification_scores.csv
+  regression_scores_path: regression_scores.csv
+  classification_stats_path: classification_stats.csv
+  regression_stats_path: regression_stats.csv
