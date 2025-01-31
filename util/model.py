@@ -13,7 +13,7 @@ def get_model(type: str,
     if objective == "classification":
         if type == "tabpfn":
             model = TabPFNClassifier(n_estimators=1,
-                                     fit_mode='low_memory',
+                                     fit_mode='fit_preprocessors',
                                      device=device)
         elif type == "carte":
             if device == 'cuda':
@@ -26,9 +26,16 @@ def get_model(type: str,
             raise ValueError(f"Model type {type} not supported.")
     elif objective == "regression":
         if type == "tabpfn":
-            model = TabPFNRegressor()
+            model = TabPFNRegressor(n_estimators=1,
+                                    fit_mode='fit_preprocessors',
+                                    device=device)
         elif type == "carte":
-            model = CARTERegressor()
+            if device == 'cuda':
+                device = 'gpu'
+            model = CARTERegressor(disable_pbar=False,
+                                   max_epoch=1,
+                                   num_model=1,
+                                   device=device)
         else:
             raise ValueError(f"Model type {type} not supported.")
     else:
